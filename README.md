@@ -2,15 +2,17 @@
 
 Automated PR review response skill for AI coding assistants — evaluate each review comment, apply or reject with reasoning, react with usefulness feedback, and resolve threads.
 
+Follows the [Agent Skills](https://agentskills.io) open standard.
+
 ## Supported Tools
 
-| Tool | Install Path | Format |
-|------|-------------|--------|
-| Claude Code | `~/.claude/skills/review-pr/SKILL.md` | Markdown |
-| Codex CLI | `~/.codex/prompts/review-pr.md` | Markdown |
-| Amp Code | `~/.config/agents/skills/review-pr/SKILL.md` | Markdown |
-| Gemini CLI | `~/.gemini/commands/review-pr.toml` | TOML |
-| OpenCode | `~/.config/opencode/commands/review-pr.md` | Markdown |
+| Tool | Install Path |
+|------|-------------|
+| Claude Code | `~/.claude/skills/review-pr/SKILL.md` |
+| Codex CLI | `~/.agents/skills/review-pr/SKILL.md` |
+| Amp Code | `~/.config/agents/skills/review-pr/SKILL.md` |
+| Gemini CLI | `~/.gemini/skills/review-pr/SKILL.md` |
+| OpenCode | `~/.config/opencode/skills/review-pr/SKILL.md` |
 
 ## Install
 
@@ -19,6 +21,8 @@ curl -fsSL https://raw.githubusercontent.com/ohprettyhak/review-pr-skill/main/in
 ```
 
 The installer auto-detects which tools are installed and adds the skill to each one.
+
+Or manually copy `SKILL.md` to your tool's skills directory.
 
 ## Usage
 
@@ -61,10 +65,10 @@ The skill reads `AGENTS.md` if present in the repo root. Project-specific review
 
 ```bash
 rm -rf ~/.claude/skills/review-pr
-rm -f ~/.codex/prompts/review-pr.md
+rm -rf ~/.agents/skills/review-pr
 rm -rf ~/.config/agents/skills/review-pr
-rm -f ~/.gemini/commands/review-pr.toml
-rm -f ~/.config/opencode/commands/review-pr.md
+rm -rf ~/.gemini/skills/review-pr
+rm -rf ~/.config/opencode/skills/review-pr
 ```
 
 ## License

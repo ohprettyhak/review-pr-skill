@@ -4,8 +4,11 @@ set -euo pipefail
 REPO="ohprettyhak/review-pr-skill"
 BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
+SKILL_FILE="SKILL.md"
 
 # ── Tool detection ──────────────────────────────────────────────────────────
+# All tools follow the Agent Skills standard (agentskills.io):
+#   <config>/skills/<skill-name>/SKILL.md
 
 TOOLS="claude codex amp gemini opencode"
 DETECTED=""
@@ -13,7 +16,7 @@ DETECTED=""
 tool_marker() {
   case "$1" in
     claude)   echo "${HOME}/.claude" ;;
-    codex)    echo "${HOME}/.codex" ;;
+    codex)    echo "${HOME}/.agents" ;;
     amp)      echo "${HOME}/.config/agents" ;;
     gemini)   echo "${HOME}/.gemini" ;;
     opencode) echo "${HOME}/.config/opencode" ;;
@@ -26,32 +29,32 @@ tool_install() {
     claude)
       local dir="${HOME}/.claude/skills/review-pr"
       mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/SKILL.md"
-      echo "  [+] Claude Code: ${dir}/SKILL.md"
+      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
+      echo "  [+] Claude Code: ${dir}/${SKILL_FILE}"
       ;;
     codex)
-      local dir="${HOME}/.codex/prompts"
+      local dir="${HOME}/.agents/skills/review-pr"
       mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/review-pr.md"
-      echo "  [+] Codex CLI:   ${dir}/review-pr.md"
+      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
+      echo "  [+] Codex CLI:   ${dir}/${SKILL_FILE}"
       ;;
     amp)
       local dir="${HOME}/.config/agents/skills/review-pr"
       mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/SKILL.md"
-      echo "  [+] Amp Code:    ${dir}/SKILL.md"
+      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
+      echo "  [+] Amp Code:    ${dir}/${SKILL_FILE}"
       ;;
     gemini)
-      local dir="${HOME}/.gemini/commands"
+      local dir="${HOME}/.gemini/skills/review-pr"
       mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/review-pr.toml" -o "${dir}/review-pr.toml"
-      echo "  [+] Gemini CLI:  ${dir}/review-pr.toml"
+      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
+      echo "  [+] Gemini CLI:  ${dir}/${SKILL_FILE}"
       ;;
     opencode)
-      local dir="${HOME}/.config/opencode/commands"
+      local dir="${HOME}/.config/opencode/skills/review-pr"
       mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/review-pr.md"
-      echo "  [+] OpenCode:    ${dir}/review-pr.md"
+      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
+      echo "  [+] OpenCode:    ${dir}/${SKILL_FILE}"
       ;;
   esac
 }
@@ -70,7 +73,7 @@ if [ -z "$DETECTED" ]; then
   echo ""
   echo "Supported tools (install any, then re-run):"
   echo "  - Claude Code   (~/.claude)"
-  echo "  - Codex CLI     (~/.codex)"
+  echo "  - Codex CLI     (~/.agents)"
   echo "  - Amp Code      (~/.config/agents)"
   echo "  - Gemini CLI    (~/.gemini)"
   echo "  - OpenCode      (~/.config/opencode)"
