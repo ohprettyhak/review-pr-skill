@@ -1,14 +1,26 @@
-# claude-skill-review-pr
+# review-pr-skills
 
-A Claude Code skill that automates PR review responses — evaluate each review comment, apply or reject with reasoning, react with usefulness feedback, and resolve threads.
+Automated PR review response skill for AI coding assistants — evaluate each review comment, apply or reject with reasoning, react with usefulness feedback, and resolve threads.
+
+## Supported Tools
+
+| Tool | Directory |
+|------|-----------|
+| Claude Code | `~/.claude/commands/` |
+| Codex CLI | `~/.codex/commands/` |
+| Amp Code | `~/.amp/commands/` |
+| Gemini CLI | `~/.gemini/commands/` |
+| OpenCode | `~/.config/opencode/commands/` |
 
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ohprettyhak/claude-skill-review-pr/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ohprettyhak/review-pr-skills/main/install.sh | bash
 ```
 
-Or manually copy `review-pr.md` to `~/.claude/commands/`.
+The installer auto-detects which tools are installed and adds the skill to each one.
+
+Or manually copy `review-pr.md` to your tool's commands directory.
 
 ## Usage
 
@@ -19,7 +31,7 @@ Or manually copy `review-pr.md` to `~/.claude/commands/`.
 
 ## What it does
 
-For each unresolved review thread:
+For each unresolved review thread on the PR:
 
 1. **Evaluate** — reads the comment and referenced code
 2. **Decide** — Apply (correctness, security, contract) or Reject (style, infeasible, out of scope)
@@ -44,8 +56,18 @@ The skill reads `AGENTS.md` if present in the repo root. Project-specific review
 
 ## Requirements
 
-- [Claude Code](https://claude.com/claude-code)
 - [GitHub CLI](https://cli.github.com/) (`gh`) authenticated
+- One or more supported AI coding tools installed
+
+## Uninstall
+
+Remove `review-pr.md` from your tool's commands directory:
+
+```bash
+rm ~/.claude/commands/review-pr.md
+rm ~/.codex/commands/review-pr.md
+# etc.
+```
 
 ## License
 
