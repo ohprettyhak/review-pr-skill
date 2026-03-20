@@ -1,4 +1,4 @@
-# review-pr-skill
+# pr-review-skill
 
 Automated PR review response skill for AI coding assistants — evaluate each review comment, apply or reject with reasoning, react with usefulness feedback, and resolve threads.
 
@@ -8,16 +8,16 @@ Follows the [Agent Skills](https://agentskills.io) open standard.
 
 | Tool | Install Path |
 |------|-------------|
-| Claude Code | `~/.claude/skills/review-pr/SKILL.md` |
-| Codex CLI | `~/.agents/skills/review-pr/SKILL.md` |
-| Amp Code | `~/.config/agents/skills/review-pr/SKILL.md` |
-| Gemini CLI | `~/.gemini/skills/review-pr/SKILL.md` |
-| OpenCode | `~/.config/opencode/skills/review-pr/SKILL.md` |
+| Claude Code | `~/.claude/skills/pr-review/SKILL.md` |
+| Codex CLI | `~/.agents/skills/pr-review/SKILL.md` |
+| Amp Code | `~/.config/agents/skills/pr-review/SKILL.md` |
+| Gemini CLI | `~/.gemini/skills/pr-review/SKILL.md` |
+| OpenCode | `~/.config/opencode/skills/pr-review/SKILL.md` |
 
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ohprettyhak/review-pr-skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ohprettyhak/pr-review-skill/main/install.sh | bash
 ```
 
 The installer auto-detects which tools are installed and adds the skill to each one.
@@ -27,8 +27,8 @@ Or manually copy `SKILL.md` to your tool's skills directory.
 ## Usage
 
 ```
-/review-pr          # Review current branch's PR
-/review-pr 52       # Review PR #52
+/pr-review          # Review current branch's PR
+/pr-review 52       # Review PR #52
 ```
 
 ## What it does
@@ -64,11 +64,11 @@ The skill reads `AGENTS.md` if present in the repo root. Project-specific review
 ## Uninstall
 
 ```bash
-rm -rf ~/.claude/skills/review-pr
-rm -rf ~/.agents/skills/review-pr
-rm -rf ~/.config/agents/skills/review-pr
-rm -rf ~/.gemini/skills/review-pr
-rm -rf ~/.config/opencode/skills/review-pr
+rm -rf ~/.claude/skills/pr-review
+rm -rf ~/.agents/skills/pr-review
+rm -rf ~/.config/agents/skills/pr-review
+rm -rf ~/.gemini/skills/pr-review
+rm -rf ~/.config/opencode/skills/pr-review
 ```
 
 ## License

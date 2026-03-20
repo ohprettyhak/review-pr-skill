@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="ohprettyhak/review-pr-skill"
+REPO="ohprettyhak/pr-review-skill"
 BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
 SKILL_FILE="SKILL.md"
@@ -54,11 +54,11 @@ tool_install() {
 
   local dir
   case "$tool" in
-    claude)   dir="${HOME}/.claude/skills/review-pr" ;;
-    codex)    dir="${HOME}/.agents/skills/review-pr" ;;
-    amp)      dir="${HOME}/.config/agents/skills/review-pr" ;;
-    gemini)   dir="${HOME}/.gemini/skills/review-pr" ;;
-    opencode) dir="${HOME}/.config/opencode/skills/review-pr" ;;
+    claude)   dir="${HOME}/.claude/skills/pr-review" ;;
+    codex)    dir="${HOME}/.agents/skills/pr-review" ;;
+    amp)      dir="${HOME}/.config/agents/skills/pr-review" ;;
+    gemini)   dir="${HOME}/.gemini/skills/pr-review" ;;
+    opencode) dir="${HOME}/.config/opencode/skills/pr-review" ;;
   esac
 
   mkdir -p "$dir"
@@ -92,7 +92,7 @@ fi
 
 # ── Install ─────────────────────────────────────────────────────────────────
 
-echo "Installing review-pr skill..."
+echo "Installing pr-review skill..."
 echo ""
 
 for tool in $DETECTED; do
@@ -100,4 +100,8 @@ for tool in $DETECTED; do
 done
 
 echo ""
-echo "Done! The skill activates when you type /review-pr or when working on PR reviews."
+echo "Usage:"
+echo "  /pr-review          Review current branch's PR"
+echo "  /pr-review 52       Review PR #52"
+echo ""
+echo "Done! The skill activates when you type /pr-review or when working on PR reviews."
