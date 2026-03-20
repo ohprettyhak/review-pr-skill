@@ -4,13 +4,13 @@ Automated PR review response skill for AI coding assistants — evaluate each re
 
 ## Supported Tools
 
-| Tool | Directory |
-|------|-----------|
-| Claude Code | `~/.claude/commands/` |
-| Codex CLI | `~/.codex/commands/` |
-| Amp Code | `~/.amp/commands/` |
-| Gemini CLI | `~/.gemini/commands/` |
-| OpenCode | `~/.config/opencode/commands/` |
+| Tool | Install Path | Format |
+|------|-------------|--------|
+| Claude Code | `~/.claude/skills/review-pr/SKILL.md` | Markdown |
+| Codex CLI | `~/.codex/prompts/review-pr.md` | Markdown |
+| Amp Code | `~/.config/agents/skills/review-pr/SKILL.md` | Markdown |
+| Gemini CLI | `~/.gemini/commands/review-pr.toml` | TOML |
+| OpenCode | `~/.config/opencode/commands/review-pr.md` | Markdown |
 
 ## Install
 
@@ -19,8 +19,6 @@ curl -fsSL https://raw.githubusercontent.com/ohprettyhak/review-pr-skills/main/i
 ```
 
 The installer auto-detects which tools are installed and adds the skill to each one.
-
-Or manually copy `review-pr.md` to your tool's commands directory.
 
 ## Usage
 
@@ -37,7 +35,7 @@ For each unresolved review thread on the PR:
 2. **Decide** — Apply (correctness, security, contract) or Reject (style, infeasible, out of scope)
 3. **Fix** — applies code changes, runs lint/typecheck
 4. **Reply** — posts "Applied" or "Rejected" with reasoning
-5. **React** — adds a reaction to the bot comment for usefulness feedback
+5. **React** — adds a thumbs up/down reaction for usefulness feedback
 6. **Resolve** — marks the thread as resolved
 
 Then commits all changes in one batch and prints a summary table.
@@ -46,9 +44,9 @@ Then commits all changes in one batch and prints a summary table.
 
 | Decision | Reaction | When |
 |----------|----------|------|
-| Applied | 👍 | Always |
-| Rejected (valid concern) | 👍 | Out of scope or infeasible, but the analysis was correct |
-| Rejected (wrong analysis) | 👎 | False positive, incorrect understanding of the code |
+| Applied | thumbs up | Always |
+| Rejected (valid concern) | thumbs up | Out of scope or infeasible, but the analysis was correct |
+| Rejected (wrong analysis) | thumbs down | False positive, incorrect understanding of the code |
 
 ## Customization
 
@@ -61,12 +59,12 @@ The skill reads `AGENTS.md` if present in the repo root. Project-specific review
 
 ## Uninstall
 
-Remove `review-pr.md` from your tool's commands directory:
-
 ```bash
-rm ~/.claude/commands/review-pr.md
-rm ~/.codex/commands/review-pr.md
-# etc.
+rm -rf ~/.claude/skills/review-pr
+rm -f ~/.codex/prompts/review-pr.md
+rm -rf ~/.config/agents/skills/review-pr
+rm -f ~/.gemini/commands/review-pr.toml
+rm -f ~/.config/opencode/commands/review-pr.md
 ```
 
 ## License

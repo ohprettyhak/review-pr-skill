@@ -65,7 +65,7 @@ For each unresolved thread, read the referenced file and surrounding code. Then 
 
 For each "Apply" decision:
 1. Make the code change
-2. Run lint and typecheck to verify: `pnpm run lint && pnpm run typecheck` (adapt to the project's toolchain)
+2. Run lint and typecheck to verify (adapt to the project's toolchain)
 3. If lint/typecheck fails, fix before continuing
 
 Do NOT commit yet — batch all fixes into one commit at the end.
@@ -102,9 +102,9 @@ gh api --method POST repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions 
 ```
 
 **Reaction rules:**
-- Applied → always 👍
-- Rejected but the concern was valid (just out of scope or infeasible) → 👍
-- Rejected because the analysis was wrong or not useful → 👎
+- Applied → always thumbs up
+- Rejected but the concern was valid (just out of scope or infeasible) → thumbs up
+- Rejected because the analysis was wrong or not useful → thumbs down
 
 ## Step 6: Resolve threads
 
@@ -122,14 +122,7 @@ gh api graphql -f query='mutation {
 
 If any code changes were made:
 1. Stage the changed files (specific files, not `git add -A`)
-2. Commit with message format:
-   ```
-   fix(<scope>): address PR review — <brief summary>
-
-   - <bullet for each applied change>
-
-   Co-Authored-By: Claude <noreply@anthropic.com>
-   ```
+2. Commit with a descriptive message summarizing what was addressed
 3. Push to the current branch
 
 ## Step 8: Summary
@@ -139,8 +132,8 @@ Print a summary table:
 ```
 | # | File | Priority | Decision | Reaction |
 |---|------|----------|----------|----------|
-| 1 | path/to/file.ts | P1 | Applied | 👍 |
-| 2 | Dockerfile | P2 | Rejected | 👍 |
+| 1 | path/to/file.ts | P1 | Applied | thumbs up |
+| 2 | Dockerfile | P2 | Rejected | thumbs up |
 ```
 
 Report total: `Applied: N, Rejected: M, Total: N+M`

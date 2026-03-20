@@ -4,7 +4,6 @@ set -euo pipefail
 REPO="ohprettyhak/review-pr-skills"
 BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
-SKILL_FILE="review-pr.md"
 
 # ── Tool detection ──────────────────────────────────────────────────────────
 
@@ -15,19 +14,45 @@ tool_marker() {
   case "$1" in
     claude)   echo "${HOME}/.claude" ;;
     codex)    echo "${HOME}/.codex" ;;
-    amp)      echo "${HOME}/.amp" ;;
+    amp)      echo "${HOME}/.config/agents" ;;
     gemini)   echo "${HOME}/.gemini" ;;
     opencode) echo "${HOME}/.config/opencode" ;;
   esac
 }
 
-tool_dir() {
-  case "$1" in
-    claude)   echo "${HOME}/.claude/commands" ;;
-    codex)    echo "${HOME}/.codex/commands" ;;
-    amp)      echo "${HOME}/.amp/commands" ;;
-    gemini)   echo "${HOME}/.gemini/commands" ;;
-    opencode) echo "${HOME}/.config/opencode/commands" ;;
+tool_install() {
+  local tool="$1"
+  case "$tool" in
+    claude)
+      local dir="${HOME}/.claude/skills/review-pr"
+      mkdir -p "$dir"
+      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/SKILL.md"
+      echo "  [+] Claude Code: ${dir}/SKILL.md"
+      ;;
+    codex)
+      local dir="${HOME}/.codex/prompts"
+      mkdir -p "$dir"
+      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/review-pr.md"
+      echo "  [+] Codex CLI:   ${dir}/review-pr.md"
+      ;;
+    amp)
+      local dir="${HOME}/.config/agents/skills/review-pr"
+      mkdir -p "$dir"
+      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/SKILL.md"
+      echo "  [+] Amp Code:    ${dir}/SKILL.md"
+      ;;
+    gemini)
+      local dir="${HOME}/.gemini/commands"
+      mkdir -p "$dir"
+      curl -fsSL "${RAW_BASE}/review-pr.toml" -o "${dir}/review-pr.toml"
+      echo "  [+] Gemini CLI:  ${dir}/review-pr.toml"
+      ;;
+    opencode)
+      local dir="${HOME}/.config/opencode/commands"
+      mkdir -p "$dir"
+      curl -fsSL "${RAW_BASE}/SKILL.md" -o "${dir}/review-pr.md"
+      echo "  [+] OpenCode:    ${dir}/review-pr.md"
+      ;;
   esac
 }
 
@@ -46,7 +71,7 @@ if [ -z "$DETECTED" ]; then
   echo "Supported tools (install any, then re-run):"
   echo "  - Claude Code   (~/.claude)"
   echo "  - Codex CLI     (~/.codex)"
-  echo "  - Amp Code      (~/.amp)"
+  echo "  - Amp Code      (~/.config/agents)"
   echo "  - Gemini CLI    (~/.gemini)"
   echo "  - OpenCode      (~/.config/opencode)"
   exit 1
@@ -61,10 +86,7 @@ echo "Detected: ${DETECTED}"
 echo ""
 
 for tool in $DETECTED; do
-  dir=$(tool_dir "$tool")
-  mkdir -p "$dir"
-  curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
-  echo "  [+] ${tool}: ${dir}/${SKILL_FILE}"
+  tool_install "$tool"
 done
 
 echo ""
