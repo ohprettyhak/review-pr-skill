@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="ohprettyhak/review-pr-skills"
+REPO="ohprettyhak/review-pr-skill"
 BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
 
@@ -79,7 +79,7 @@ fi
 
 # ── Install ─────────────────────────────────────────────────────────────────
 
-echo "review-pr-skills installer"
+echo "review-pr-skill installer"
 echo "========================="
 echo ""
 echo "Detected: ${DETECTED}"

@@ -1,4 +1,4 @@
-# review-pr-skills
+# review-pr-skill
 
 Automated PR review response skill for AI coding assistants — evaluate each review comment, apply or reject with reasoning, react with usefulness feedback, and resolve threads.
 
@@ -15,7 +15,7 @@ Automated PR review response skill for AI coding assistants — evaluate each re
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ohprettyhak/review-pr-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ohprettyhak/review-pr-skill/main/install.sh | bash
 ```
 
 The installer auto-detects which tools are installed and adds the skill to each one.
