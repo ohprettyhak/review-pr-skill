@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-REPO="haklee/claude-skill-review-pr"
+REPO="ohprettyhak/claude-skill-review-pr"
 BRANCH="main"
 SKILL_FILE="review-pr.md"
 SKILL_DIR="${HOME}/.claude/commands"

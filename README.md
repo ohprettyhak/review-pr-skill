@@ -5,7 +5,7 @@ A Claude Code skill that automates PR review responses — evaluate each review 
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/haklee/claude-skill-review-pr/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ohprettyhak/claude-skill-review-pr/main/install.sh | bash
 ```
 
 Or manually copy `review-pr.md` to `~/.claude/commands/`.
