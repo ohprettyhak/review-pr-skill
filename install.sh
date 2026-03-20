@@ -6,6 +6,20 @@ BRANCH="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
 SKILL_FILE="SKILL.md"
 
+# ── Color support ───────────────────────────────────────────────────────────
+
+if [ -t 1 ]; then
+  GREEN="\033[32m"
+  RED="\033[31m"
+  DIM="\033[2m"
+  RESET="\033[0m"
+else
+  GREEN=""
+  RED=""
+  DIM=""
+  RESET=""
+fi
+
 # ── Tool detection ──────────────────────────────────────────────────────────
 # All tools follow the Agent Skills standard (agentskills.io):
 #   <config>/skills/<skill-name>/SKILL.md
@@ -23,40 +37,36 @@ tool_marker() {
   esac
 }
 
+tool_label() {
+  case "$1" in
+    claude)   echo "Claude Code" ;;
+    codex)    echo "Codex CLI" ;;
+    amp)      echo "Amp Code" ;;
+    gemini)   echo "Gemini CLI" ;;
+    opencode) echo "OpenCode" ;;
+  esac
+}
+
 tool_install() {
   local tool="$1"
+  local label
+  label=$(tool_label "$tool")
+
+  local dir
   case "$tool" in
-    claude)
-      local dir="${HOME}/.claude/skills/review-pr"
-      mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
-      echo "  [+] Claude Code: ${dir}/${SKILL_FILE}"
-      ;;
-    codex)
-      local dir="${HOME}/.agents/skills/review-pr"
-      mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
-      echo "  [+] Codex CLI:   ${dir}/${SKILL_FILE}"
-      ;;
-    amp)
-      local dir="${HOME}/.config/agents/skills/review-pr"
-      mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
-      echo "  [+] Amp Code:    ${dir}/${SKILL_FILE}"
-      ;;
-    gemini)
-      local dir="${HOME}/.gemini/skills/review-pr"
-      mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
-      echo "  [+] Gemini CLI:  ${dir}/${SKILL_FILE}"
-      ;;
-    opencode)
-      local dir="${HOME}/.config/opencode/skills/review-pr"
-      mkdir -p "$dir"
-      curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}"
-      echo "  [+] OpenCode:    ${dir}/${SKILL_FILE}"
-      ;;
+    claude)   dir="${HOME}/.claude/skills/review-pr" ;;
+    codex)    dir="${HOME}/.agents/skills/review-pr" ;;
+    amp)      dir="${HOME}/.config/agents/skills/review-pr" ;;
+    gemini)   dir="${HOME}/.gemini/skills/review-pr" ;;
+    opencode) dir="${HOME}/.config/opencode/skills/review-pr" ;;
   esac
+
+  mkdir -p "$dir"
+  if curl -fsSL "${RAW_BASE}/${SKILL_FILE}" -o "${dir}/${SKILL_FILE}" 2>/dev/null; then
+    printf "  ${GREEN}✓${RESET} %s\n" "$label"
+  else
+    printf "  ${RED}✗${RESET} %s ${DIM}(download failed)${RESET}\n" "$label"
+  fi
 }
 
 for tool in $TOOLS; do
@@ -69,23 +79,20 @@ done
 DETECTED=$(echo "$DETECTED" | xargs)
 
 if [ -z "$DETECTED" ]; then
-  echo "No supported AI coding tools detected."
+  echo "No supported tools detected."
   echo ""
-  echo "Supported tools (install any, then re-run):"
-  echo "  - Claude Code   (~/.claude)"
-  echo "  - Codex CLI     (~/.agents)"
-  echo "  - Amp Code      (~/.config/agents)"
-  echo "  - Gemini CLI    (~/.gemini)"
-  echo "  - OpenCode      (~/.config/opencode)"
+  echo "Install one of these first:"
+  echo "  - Claude Code:  https://claude.ai/code"
+  echo "  - Codex CLI:    https://codex.openai.com"
+  echo "  - Amp Code:     https://ampcode.com"
+  echo "  - Gemini CLI:   https://github.com/google-gemini/gemini-cli"
+  echo "  - OpenCode:     https://opencode.ai"
   exit 1
 fi
 
 # ── Install ─────────────────────────────────────────────────────────────────
 
-echo "review-pr-skill installer"
-echo "========================="
-echo ""
-echo "Detected: ${DETECTED}"
+echo "Installing review-pr skill..."
 echo ""
 
 for tool in $DETECTED; do
@@ -93,8 +100,4 @@ for tool in $DETECTED; do
 done
 
 echo ""
-echo "Usage:"
-echo "  /review-pr          Review current branch's PR"
-echo "  /review-pr 52       Review PR #52"
-echo ""
-echo "Done."
+echo "Done! The skill activates when you type /review-pr or when working on PR reviews."
