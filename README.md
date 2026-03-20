@@ -1,14 +1,28 @@
-# claude-skill-review-pr
+# review-pr-skill
 
-A Claude Code skill that automates PR review responses — evaluate each review comment, apply or reject with reasoning, react with usefulness feedback, and resolve threads.
+Automated PR review response skill for AI coding assistants — evaluate each review comment, apply or reject with reasoning, react with usefulness feedback, and resolve threads.
+
+Follows the [Agent Skills](https://agentskills.io) open standard.
+
+## Supported Tools
+
+| Tool | Install Path |
+|------|-------------|
+| Claude Code | `~/.claude/skills/review-pr/SKILL.md` |
+| Codex CLI | `~/.agents/skills/review-pr/SKILL.md` |
+| Amp Code | `~/.config/agents/skills/review-pr/SKILL.md` |
+| Gemini CLI | `~/.gemini/skills/review-pr/SKILL.md` |
+| OpenCode | `~/.config/opencode/skills/review-pr/SKILL.md` |
 
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/ohprettyhak/claude-skill-review-pr/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ohprettyhak/review-pr-skill/main/install.sh | bash
 ```
 
-Or manually copy `review-pr.md` to `~/.claude/commands/`.
+The installer auto-detects which tools are installed and adds the skill to each one.
+
+Or manually copy `SKILL.md` to your tool's skills directory.
 
 ## Usage
 
@@ -19,13 +33,13 @@ Or manually copy `review-pr.md` to `~/.claude/commands/`.
 
 ## What it does
 
-For each unresolved review thread:
+For each unresolved review thread on the PR:
 
 1. **Evaluate** — reads the comment and referenced code
 2. **Decide** — Apply (correctness, security, contract) or Reject (style, infeasible, out of scope)
 3. **Fix** — applies code changes, runs lint/typecheck
 4. **Reply** — posts "Applied" or "Rejected" with reasoning
-5. **React** — adds a reaction to the bot comment for usefulness feedback
+5. **React** — adds a thumbs up/down reaction for usefulness feedback
 6. **Resolve** — marks the thread as resolved
 
 Then commits all changes in one batch and prints a summary table.
@@ -34,9 +48,9 @@ Then commits all changes in one batch and prints a summary table.
 
 | Decision | Reaction | When |
 |----------|----------|------|
-| Applied | 👍 | Always |
-| Rejected (valid concern) | 👍 | Out of scope or infeasible, but the analysis was correct |
-| Rejected (wrong analysis) | 👎 | False positive, incorrect understanding of the code |
+| Applied | thumbs up | Always |
+| Rejected (valid concern) | thumbs up | Out of scope or infeasible, but the analysis was correct |
+| Rejected (wrong analysis) | thumbs down | False positive, incorrect understanding of the code |
 
 ## Customization
 
@@ -44,8 +58,18 @@ The skill reads `AGENTS.md` if present in the repo root. Project-specific review
 
 ## Requirements
 
-- [Claude Code](https://claude.com/claude-code)
 - [GitHub CLI](https://cli.github.com/) (`gh`) authenticated
+- One or more supported AI coding tools installed
+
+## Uninstall
+
+```bash
+rm -rf ~/.claude/skills/review-pr
+rm -rf ~/.agents/skills/review-pr
+rm -rf ~/.config/agents/skills/review-pr
+rm -rf ~/.gemini/skills/review-pr
+rm -rf ~/.config/opencode/skills/review-pr
+```
 
 ## License
 
