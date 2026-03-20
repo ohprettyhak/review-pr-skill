@@ -100,4 +100,8 @@ for tool in $DETECTED; do
 done
 
 echo ""
+echo "Usage:"
+echo "  /pr-review          Review current branch's PR"
+echo "  /pr-review 52       Review PR #52"
+echo ""
 echo "Done! The skill activates when you type /pr-review or when working on PR reviews."
